@@ -73,7 +73,7 @@ namespace OrderManagementSystem
                 });
             });
 
-            var key = Encoding.ASCII.GetBytes("1234567890123456");
+            var key = Encoding.ASCII.GetBytes(Configuration["ApplicationSettings:JWT_Secret"].ToString());
             services.AddAuthentication(x =>
             {
                 x.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;

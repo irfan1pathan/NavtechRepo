@@ -1,4 +1,5 @@
-﻿using Microsoft.IdentityModel.Tokens;
+﻿using Microsoft.Extensions.Configuration;
+using Microsoft.IdentityModel.Tokens;
 using OrderManagementSystem.BL.IOrderServiceBL;
 using OrderManagementSystem.Models;
 using System;
@@ -14,18 +15,21 @@ namespace OrderManagementSystem.BL.OrserServiceBL
     public class UserAuth:IUserAuth
     {
         private readonly navtechContext context;
-       // private readonly IUserAuth auth;
+        private readonly IConfiguration config;
 
-        public UserAuth(navtechContext context)
+        // private readonly IUserAuth auth;
+
+        public UserAuth(navtechContext context,IConfiguration config)
         {
             this.context = context;
+            this.config = config;
         }
 
         public object Authenticate(string username, string password)
         {
             var users = context.Users.SingleOrDefault(x => x.UserName == username && x.Password == password);
             var tokenHandler = new JwtSecurityTokenHandler();
-            var key = Encoding.ASCII.GetBytes("1234567890123456");
+            var key = Encoding.ASCII.GetBytes(config["ApplicationSettings:JWT_Secret"].ToString());
             var tokenDescriptor = new SecurityTokenDescriptor
             {
                 Subject = new ClaimsIdentity(new Claim[]
