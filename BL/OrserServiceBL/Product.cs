@@ -19,7 +19,7 @@ namespace OrderManagementSystem.BL.OrserServiceBL
         }
         public object GetProductData()
         {
-            var result = Context.Products.ToList();
+            var result = Context.Products.Where(x=>x.IsDelete==false).ToList();
             return result;
         }
         public async Task<object> UpdateProductDetils(Products jsondata, string image)

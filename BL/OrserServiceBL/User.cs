@@ -68,7 +68,7 @@ namespace OrderManagementSystem.BL.OrserServiceBL
 
         public object GetAllUsers()
         {
-            var result = user.Users.ToList();
+            var result = user.Users.Where(x=>x.IsDelete==false).ToList();
             return result;
         }
 
